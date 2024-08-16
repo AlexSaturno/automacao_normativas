@@ -147,9 +147,16 @@ def configurar_driver():
     """Função para configurar o WebDriver do Selenium para Google Chrome"""
     chrome_options = Options()
     chrome_options.add_argument("--headless")
-    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument("--disable-gpu")  # Melhor para headless
+    chrome_options.add_argument("--no-sandbox")  # Para evitar alguns problemas de sandbox em sistemas baseados em Linux
+
+    # Alterar a estratégia de carregamento da página
+    caps = DesiredCapabilities().CHROME
+    caps["pageLoadStrategy"] = "none"
+    
     # service = Service(r"/usr/bin/chromedriver")
     service = Service(r"/usr/lib/chromium-browser/chromedriver")
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=caps)
     # driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver.set_page_load_timeout(2500) 
     return driver
