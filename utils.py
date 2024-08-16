@@ -149,6 +149,7 @@ def configurar_driver():
     chrome_options.add_argument("--headless")
     chrome_options.add_argument('--no-sandbox')
     # service = Service(r"/usr/bin/chromedriver")
-    driver = webdriver.Chrome(service='/usr/lib/chromium-browser/chromedriver', options=chrome_options)
+    service = Service(r"/usr/lib/chromium-browser/chromedriver")
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     # driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver
