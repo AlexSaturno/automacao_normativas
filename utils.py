@@ -152,5 +152,5 @@ def configurar_driver():
         r"/usr/bin/chromedriver"
     )
     driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver', options=chrome_options)
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    # driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver
