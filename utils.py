@@ -146,7 +146,9 @@ def formatar_data(d):
 def configurar_driver():
     """Função para configurar o WebDriver do Selenium para Google Chrome"""
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")  # Executa o navegador em modo headless (sem interface gráfica)
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument('--no-sandbox')
+    driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver', options=chrome_options)
     service = Service(
         r"/usr/bin/chromedriver"
     )
