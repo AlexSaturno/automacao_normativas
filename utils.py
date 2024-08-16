@@ -150,6 +150,6 @@ def configurar_driver():
         "--headless"
     )  # Executa o navegador em modo headless (sem interface gráfica)
     service = Service(
-        r"C:\Users\alexa\.wdm\drivers\chromedriver\win64\122.0.6261.128\chromedriver-win32\chromedriver.exe"
+        r"/usr/bin/chromium-browser"
     )
     return webdriver.Chrome(service=service, options=chrome_options)
