@@ -19,26 +19,26 @@ from email.mime.application import MIMEApplication
 import smtplib
 
 # ----------------------------------
-# Outlook
-import win32com.client as win32
+# # Outlook
+# import win32com.client as win32
 
 
-# Função para enviar email pelo Outlook
-def enviar_email_outlook(destinatario, assunto, corpo, caminho_arquivo):
-    outlook = win32.Dispatch("outlook.application")
-    mail = outlook.CreateItem(0)  # 0: olMailItem
-    mail.To = destinatario
-    mail.Subject = assunto
-    mail.Body = corpo
+# # Função para enviar email pelo Outlook
+# def enviar_email_outlook(destinatario, assunto, corpo, caminho_arquivo):
+#     outlook = win32.Dispatch("outlook.application")
+#     mail = outlook.CreateItem(0)  # 0: olMailItem
+#     mail.To = destinatario
+#     mail.Subject = assunto
+#     mail.Body = corpo
 
-    # Adiciona o anexo
-    mail.Attachments.Add(caminho_arquivo)
+#     # Adiciona o anexo
+#     mail.Attachments.Add(caminho_arquivo)
 
-    # Envia o e-mail
-    try:
-        mail.Send()
-    except Exception as e:
-        print(f"Erro ao enviar e-mail: {e}")
+#     # Envia o e-mail
+#     try:
+#         mail.Send()
+#     except Exception as e:
+#         print(f"Erro ao enviar e-mail: {e}")
 
 
 def enviar_email(com_anexo, destinatario, assunto, corpo, caminho_arquivo):
