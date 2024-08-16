@@ -150,6 +150,6 @@ def configurar_driver():
         "--headless"
     )  # Executa o navegador em modo headless (sem interface gráfica)
     service = Service(
-        r"/usr/bin/chromium-browser"
+        r"/usr/bin/chromedriver"
     )
     return webdriver.Chrome(service=service, options=chrome_options)
