@@ -145,14 +145,25 @@ def formatar_data(d):
 
 def configurar_driver():
     """Função para configurar o WebDriver do Selenium para Google Chrome"""
+    ### Local ###
+    # chrome_options = Options()
+    # chrome_options.add_argument(
+    #     "--headless"
+    # )  # Executa o navegador em modo headless (sem interface gráfica)
+    # service = Service(
+    #     r"C:\Users\alexa\.wdm\drivers\chromedriver\win64\122.0.6261.128\chromedriver-win32\chromedriver.exe"
+    # )
+    # return webdriver.Chrome(service=service, options=chrome_options)
+
+    ### VM ###
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")  # Melhor para headless
-    chrome_options.add_argument("--no-sandbox")  # Para evitar alguns problemas de sandbox em sistemas baseados em Linux
-    
-    # service = Service(r"/usr/bin/chromedriver")
+    chrome_options.add_argument(
+        "--no-sandbox"
+    )  # Para evitar alguns problemas de sandbox em sistemas baseados em Linux
+
     service = Service(r"/usr/lib/chromium-browser/chromedriver")
     driver = webdriver.Chrome(service=service, options=chrome_options)
-    # driver = webdriver.Chrome(service=service, options=chrome_options)
-    driver.set_page_load_timeout(2500) 
+    driver.set_page_load_timeout(2500)
     return driver

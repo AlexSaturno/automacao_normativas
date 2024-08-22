@@ -9,32 +9,39 @@ def extrair_dados_bacen(driver, dados_extraidos):
             try:
                 link_element = item.find_element(By.TAG_NAME, "a")
                 titulo = link_element.text.strip()
-                link = link_element.get_attribute("href")
 
-                texto_item = item.text
+                verifica_comunicado = titulo.split(" ")[0].strip()
+                if verifica_comunicado != "Comunicado":
+                    link = link_element.get_attribute("href")
 
-                data = (
-                    texto_item.split("Data/Hora Documento:")[-1]
-                    .split("Assunto:")[0]
-                    .strip()
-                )
-                assunto = (
-                    texto_item.split("Assunto:")[-1].split("Responsável:")[0].strip()
-                )
-                responsavel = (
-                    texto_item.split("Responsável:")[-1].strip()
-                    if "Responsável:" in texto_item
-                    else "Responsável não encontrado"
-                )
+                    texto_item = item.text
 
-                dados_extraidos[titulo].append(
-                    {
-                        "data": data,
-                        "assunto": assunto,
-                        "responsavel": responsavel,
-                        "link": link,
-                    }
-                )
+                    data = (
+                        texto_item.split("Data/Hora Documento:")[-1]
+                        .split("Assunto:")[0]
+                        .strip()
+                    )
+                    assunto = (
+                        texto_item.split("Assunto:")[-1]
+                        .split("Responsável:")[0]
+                        .strip()
+                    )
+                    responsavel = (
+                        texto_item.split("Responsável:")[-1].strip()
+                        if "Responsável:" in texto_item
+                        else "Responsável não encontrado"
+                    )
+
+                    dados_extraidos[titulo].append(
+                        {
+                            "data": data,
+                            "assunto": assunto,
+                            "responsavel": responsavel,
+                            "link": link,
+                        }
+                    )
+                else:
+                    print("Localizado Comunicado. Descartando...")
             except Exception as e:
                 print(f"Erro ao processar um item: {e}")
     except Exception as e:

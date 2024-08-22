@@ -183,25 +183,31 @@ if __name__ == "__main__":
 
     dados_completos = {"BACEN": dados_bacen, "SUSEP": dados_susep, "CVM": dados_cvm}
 
-    hoje = datetime.datetime.today()
-    nome_arquivo_pdf = f"extracao_{hoje.day:02}_{hoje.month:02}_{hoje.year:04}.pdf"
-    salvar_em_pdf(dados_completos, nome_arquivo_pdf)
-
-    destinatario = "carlos.quinteiro@safra.com.br,joao.sena@safra.com.br,denise.siqueira@safra.com.br,ccosta.ricardo@safra.com.br,alexander.saturno@safra.com.br,fabio.panunto@safra.com.br,eric.rocha@safra.com.br"
-    assunto = "Relatório de Extração de Dados"
-
-    # Convert the dictionary to a JSON string to pass as a single parameter
-    dados_completos_str = json.dumps(
-        dados_completos, ensure_ascii=False, indent=4, cls=DateTimeEncoder
+    quantidade_dados_total = (
+        quantidade_dados_bacen + quantidade_dados_cvm + quantidade_dados_susep
     )
-    corpo_email = chain.invoke(
-        {
-            "data": dados_completos_str,
-            "quantidade_dados_bacen": quantidade_dados_bacen,
-            "quantidade_dados_susep": quantidade_dados_susep,
-            "quantidade_dados_cvm": quantidade_dados_cvm,
-        }
-    )
-    print(corpo_email.content)
 
-    enviar_email(True, destinatario, assunto, corpo_email.content, nome_arquivo_pdf)
+    # Só salva arquivo e envia por e-mail caso tenham sido extraídos dados
+    if quantidade_dados_total != 0:
+        hoje = datetime.datetime.today()
+        nome_arquivo_pdf = f"extracao_{hoje.day:02}_{hoje.month:02}_{hoje.year:04}.pdf"
+        salvar_em_pdf(dados_completos, nome_arquivo_pdf)
+
+        destinatario = "carlos.quinteiro@safra.com.br,joao.sena@safra.com.br,denise.siqueira@safra.com.br,ccosta.ricardo@safra.com.br,alexander.saturno@safra.com.br,fabio.panunto@safra.com.br,eric.rocha@safra.com.br"
+        assunto = "Relatório de Extração de Dados"
+
+        # Convert the dictionary to a JSON string to pass as a single parameter
+        dados_completos_str = json.dumps(
+            dados_completos, ensure_ascii=False, indent=4, cls=DateTimeEncoder
+        )
+        corpo_email = chain.invoke(
+            {
+                "data": dados_completos_str,
+                "quantidade_dados_bacen": quantidade_dados_bacen,
+                "quantidade_dados_susep": quantidade_dados_susep,
+                "quantidade_dados_cvm": quantidade_dados_cvm,
+            }
+        )
+        print(corpo_email.content)
+
+        enviar_email(True, destinatario, assunto, corpo_email.content, nome_arquivo_pdf)
